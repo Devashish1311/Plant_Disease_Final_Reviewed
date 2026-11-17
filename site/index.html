@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="An ES 335 study comparing handcrafted colour and texture features for potato leaf disease classification.">
+<title>LeafLab | Handcrafted Features for Plant Disease Identification</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <nav><a class="brand" href="#">LEAFLAB<span>.</span></a><div class="navlinks"><a href="#question">Question</a><a href="#data">Data</a><a href="#methods">Methods</a><a href="#results">Results</a><a href="#limits">Limitations</a></div></nav>
+  <div class="hero-inner">
+    <p class="eyebrow">ES 335 · UNDERGRADUATE MACHINE LEARNING PROJECT</p>
+    <h1>Can handcrafted image features identify potato leaf diseases?</h1>
+    <p class="lead">A comparative study of colour and texture descriptors for distinguishing healthy leaves, early blight and late blight using traditional machine learning.</p>
+    <a class="cta" href="#results">Explore measured results <span>↓</span></a>
+  </div>
+  <div class="hero-stat"><div><strong>2,152</strong><span>images analysed</span></div><div><strong>3</strong><span>potato classes</span></div><div><strong>4</strong><span>feature representations</span></div></div>
+</header>
+<main>
+<section id="question" class="section question">
+  <p class="eyebrow">01 · PROBLEM FORMULATION</p><h2>Which visual features carry the most useful information?</h2>
+  <p class="section-lead">We ask whether colour statistics, GLCM texture, Local Binary Patterns (LBP), or their combination best distinguish three labelled potato-leaf categories.</p>
+  <div class="callout"><b>Scope of the claim</b><p>This is a three-class image-classification experiment on the PlantVillage potato subset. It is not a field-tested diagnostic tool and does not locate individual lesions.</p></div>
+</section>
+
+<section id="data" class="section">
+  <p class="eyebrow">02 · DATA UNDERSTANDING</p><h2>One crop, three labelled classes</h2>
+  <p>The source is the public PlantVillage image dataset. We selected the potato folders and retained images that could be read and processed. One observation is one leaf image; the target is its folder-provided class label.</p>
+  <div class="class-grid">
+    <article><span class="dot early"></span><h3>Early blight</h3><strong>1,000</strong><small>46.5% of images</small></article>
+    <article><span class="dot healthy"></span><h3>Healthy</h3><strong>152</strong><small>7.1% of images</small></article>
+    <article><span class="dot late"></span><h3>Late blight</h3><strong>1,000</strong><small>46.5% of images</small></article>
+  </div>
+  <div class="panel">
+    <h3>Class distribution</h3>
+    <div class="dist-row"><span>Early blight</span><div class="track"><div class="fill early-fill" style="width:100%"></div></div><b>1,000</b></div>
+    <div class="dist-row"><span>Healthy</span><div class="track"><div class="fill healthy-fill" style="width:15.2%"></div></div><b>152</b></div>
+    <div class="dist-row"><span>Late blight</span><div class="track"><div class="fill late-fill" style="width:100%"></div></div><b>1,000</b></div>
+    <p class="small">The healthy class is substantially underrepresented. This is why macro-averaged metrics and class-wise error inspection matter.</p>
+  </div>
+  <div class="facts"><div><b>2,152</b><span>unique images after exact-file deduplication</span></div><div><b>1,721 / 431</b><span>training / test images (80/20 stratified split)</span></div><div><b>42</b><span>random seed</span></div></div>
+  <p class="small">Dataset source: <a href="https://github.com/spMohanty/PlantVillage-Dataset" target="_blank" rel="noopener">PlantVillage-Dataset repository</a>. The image labels are inherited from the dataset; they were not independently verified by this project.</p>
+</section>
+
+<section id="preprocessing" class="section">
+  <p class="eyebrow">03 · PREPROCESSING</p><h2>From image files to comparable inputs</h2>
+  <div class="steps">
+    <article><b>01</b><div><h3>Find and validate images</h3><p>Search the three potato class folders recursively; skip unreadable images.</p></div></article>
+    <article><b>02</b><div><h3>Remove exact duplicates</h3><p>Compute SHA-1 hashes and retain one copy of byte-identical image files. This does not detect every visually similar image.</p></div></article>
+    <article><b>03</b><div><h3>Standardise image size</h3><p>Convert to RGB and resize each image to 128 × 128 pixels.</p></div></article>
+    <article><b>04</b><div><h3>Create feature representations</h3><p>Use HSV for colour descriptors and grayscale images for GLCM and LBP texture descriptors.</p></div></article>
+  </div>
+</section>
+
+<section id="methods" class="section">
+  <p class="eyebrow">04 · FEATURES AND METHODS</p><h2>Four representations, three learned classifiers</h2>
+  <div class="feature-grid">
+    <article><span class="tag">54 dimensions</span><h3>Colour · HSV</h3><p>For each H, S and V channel: mean, standard deviation and a 16-bin histogram. These summarise the image's colour distribution.</p></article>
+    <article><span class="tag">48 dimensions</span><h3>Texture · GLCM</h3><p>Six properties (contrast, dissimilarity, homogeneity, energy, correlation and ASM), across two distances and four angles.</p></article>
+    <article><span class="tag">10 dimensions</span><h3>Texture · LBP</h3><p>Uniform Local Binary Pattern histogram with eight neighbours and radius one.</p></article>
+    <article class="combined"><span class="tag">112 dimensions</span><h3>Combined</h3><p>Concatenation of the 54 colour, 48 GLCM and 10 LBP features.</p></article>
+  </div>
+  <div class="panel model-panel"><h3>Models compared</h3><div class="pills"><span>Majority-class baseline</span><span>Logistic Regression</span><span>RBF Support Vector Machine</span><span>Random Forest</span></div><p>Logistic Regression and SVM use standardisation inside a scikit-learn pipeline. Hyperparameters are selected by stratified 5-fold cross-validation on the training set only. Random Forest uses class weighting and does not require feature scaling.</p></div>
+</section>
+
+<section id="evaluation" class="section">
+  <p class="eyebrow">05 · EVALUATION DESIGN</p><h2>Keep model selection separate from final testing</h2>
+  <div class="eval-grid"><article><h3>Data split</h3><p>80% training and 20% held-out testing, using stratification to preserve class proportions.</p></article><article><h3>Model selection</h3><p>Stratified 5-fold cross-validation and grid search are performed on the training portion.</p></article><article><h3>Metrics</h3><p>Accuracy, macro-F1, macro precision and macro recall. Macro-F1 gives each class equal weight.</p></article></div>
+  <p class="small">All test metrics below are computed once on the held-out 431-image test set. The final test set is not used for hyperparameter selection.</p>
+</section>
+
+<section id="results" class="section results-section">
+  <p class="eyebrow">06 · RESULTS AND ERROR ANALYSIS</p><h2>Explore the measured test performance</h2>
+  <p class="section-lead">Choose a feature representation and classifier to inspect its metrics and confusion matrix. The values are loaded from the experiment's exported results file.</p>
+  <div class="controls"><label>Feature representation<select id="featureSelect"></select></label><label>Classifier<select id="modelSelect"></select></label></div>
+  <div id="status" class="notice">The results file could not be loaded. Check that <code>results.json</code> is in the same folder as this page.</div>
+  <div id="explorer" hidden>
+    <div class="metrics" id="metricCards"></div>
+    <div class="result-grid"><div class="panel"><h3>All classifiers · selected features</h3><div id="bars"></div></div><div class="panel"><h3>Confusion matrix</h3><div id="matrix"></div><p class="small">Rows are actual classes; columns are predicted classes.</p></div></div>
+    <div class="panel class-report"><h3>Per-class precision, recall and F1</h3><div id="classReport"></div></div>
+    <p id="bestParams" class="small"></p>
+  </div>
+  <div class="panel summary-panel"><h3>Headline comparison</h3><div class="table-wrap"><table><thead><tr><th>Feature set</th><th>Best macro-F1 model</th><th>Macro-F1</th><th>Highest accuracy model</th><th>Accuracy</th></tr></thead><tbody>
+  <tr><td>Colour</td><td>Random Forest</td><td>0.9773</td><td>Random Forest</td><td>0.9884</td></tr>
+  <tr><td>GLCM</td><td>Logistic Regression</td><td>0.8165</td><td>Logistic Regression</td><td>0.8910</td></tr>
+  <tr><td>LBP</td><td>Random Forest</td><td>0.6620</td><td>Random Forest</td><td>0.6984</td></tr>
+  <tr><td>Combined</td><td>Random Forest</td><td><b>0.9887</b></td><td>SVM (RBF)</td><td><b>0.9930</b></td></tr>
+  </tbody></table></div><p class="small">Rounded to four decimal places. These are observed values from this run, not expected or guaranteed performance.</p></div>
+  <div class="finding"><b>Interpretation</b><p>Colour features alone are strong in this experiment. GLCM and LBP alone perform less well, while the combined representation gives the highest macro-F1 with Random Forest. The combined SVM has the highest accuracy. This shows why the choice of metric matters: the model with the highest accuracy is not necessarily the model with the highest macro-F1.</p></div>
+</section>
+
+<section id="limits" class="section">
+  <p class="eyebrow">07 · LIMITATIONS</p><h2>What these results do not establish</h2>
+  <ul class="limit-list">
+    <li><b>Class imbalance:</b> only 152 healthy images are available, compared with 1,000 in each disease class. The held-out test set contains only 31 healthy images.</li>
+    <li><b>Controlled image conditions:</b> PlantVillage images do not represent the full variation of farm photographs, lighting, backgrounds and camera conditions.</li>
+    <li><b>Duplicate handling:</b> exact byte-identical files are removed; near-duplicates may remain.</li>
+    <li><b>Feature scope:</b> global image descriptors are used. The project does not segment or localise individual lesions.</li>
+    <li><b>External validity:</b> no independent field dataset was used, so real-world generalisation is not demonstrated.</li>
+  </ul>
+  <div class="callout"><b>Careful conclusion</b><p>On this PlantVillage potato subset and this particular split, handcrafted colour and texture features combined with traditional classifiers achieved high test scores. Further evaluation on balanced and independently collected field images is needed before making practical diagnostic claims.</p></div>
+</section>
+
+<section id="reproducibility" class="section">
+  <p class="eyebrow">08 · REPRODUCIBILITY</p><h2>Rebuild the experiment</h2>
+  <ol class="rebuild"><li>Download the PlantVillage repository and locate the three potato class folders.</li><li>Install packages listed in <code>requirements.txt</code>.</li><li>Run <code>python src/run_experiments.py --data-dir data/PlantVillage</code>.</li><li>Copy <code>outputs/results.json</code> to <code>site/results.json</code>.</li><li>Publish the website folder using the included GitHub Pages workflow.</li></ol>
+  <h3>AI-use disclosure</h3><p>Generative AI was used to assist with project planning, code scaffolding, debugging suggestions and documentation. The student should verify the code, run the experiments, understand and interpret the results, and follow the course's AI-use policy. Edit this disclosure if your actual use differs.</p>
+  <h3>References</h3><ul><li><a href="https://github.com/spMohanty/PlantVillage-Dataset" target="_blank" rel="noopener">PlantVillage dataset repository</a>.</li><li><a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener">scikit-learn documentation</a>.</li><li><a href="https://scikit-image.org/docs/stable/api/skimage.feature.html" target="_blank" rel="noopener">scikit-image feature documentation</a>.</li></ul>
+</section>
+</main>
+<footer>
+  <span>LEAFLAB · ES 335</span>
+  <span>Plant Disease Identification Using Handcrafted Image Features</span>
+  <span>Devashish · 24110104</span>
+</footer>
+<script src="app.js"></script>
+</body></html>

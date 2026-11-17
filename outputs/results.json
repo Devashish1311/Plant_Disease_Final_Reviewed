@@ -1,0 +1,495 @@
+{
+  "project_title": "Plant Disease Identification Using Handcrafted Image Features",
+  "dataset": "PlantVillage \u2014 potato subset",
+  "classes": [
+    "Early blight",
+    "Healthy",
+    "Late blight"
+  ],
+  "class_counts": {
+    "Early blight": 1000,
+    "Healthy": 152,
+    "Late blight": 1000
+  },
+  "n_images": 2152,
+  "test_size": 0.2,
+  "random_seed": 42,
+  "split": {
+    "train": 1721,
+    "test": 431
+  },
+  "metrics": [
+    {
+      "feature_set": "Colour",
+      "model": "Majority baseline",
+      "accuracy": 0.46403712296983757,
+      "macro_f1": 0.21130480718436342,
+      "macro_precision": 0.15467904098994587,
+      "macro_recall": 0.3333333333333333,
+      "best_cv_macro_f1": null,
+      "best_params": null
+    },
+    {
+      "feature_set": "Colour",
+      "model": "Logistic Regression",
+      "accuracy": 0.974477958236659,
+      "macro_f1": 0.9601011495589239,
+      "macro_precision": 0.9490554485312784,
+      "macro_recall": 0.9725806451612904,
+      "best_cv_macro_f1": 0.9578982536699767,
+      "best_params": {
+        "model__C": 10
+      }
+    },
+    {
+      "feature_set": "Colour",
+      "model": "SVM (RBF)",
+      "accuracy": 0.9837587006960556,
+      "macro_f1": 0.9739394468331053,
+      "macro_precision": 0.9885604007555227,
+      "macro_recall": 0.9610752688172043,
+      "best_cv_macro_f1": 0.9745639995760358,
+      "best_params": {
+        "model__C": 5,
+        "model__gamma": "scale"
+      }
+    },
+    {
+      "feature_set": "Colour",
+      "model": "Random Forest",
+      "accuracy": 0.988399071925754,
+      "macro_f1": 0.9772605792441317,
+      "macro_precision": 0.991869918699187,
+      "macro_recall": 0.9644086021505376,
+      "best_cv_macro_f1": 0.966304652030251,
+      "best_params": {
+        "model__max_features": "sqrt",
+        "model__min_samples_leaf": 2
+      }
+    },
+    {
+      "feature_set": "GLCM",
+      "model": "Majority baseline",
+      "accuracy": 0.46403712296983757,
+      "macro_f1": 0.21130480718436342,
+      "macro_precision": 0.15467904098994587,
+      "macro_recall": 0.3333333333333333,
+      "best_cv_macro_f1": null,
+      "best_params": null
+    },
+    {
+      "feature_set": "GLCM",
+      "model": "Logistic Regression",
+      "accuracy": 0.8909512761020881,
+      "macro_f1": 0.8165234601592575,
+      "macro_precision": 0.7921621102327624,
+      "macro_recall": 0.876236559139785,
+      "best_cv_macro_f1": 0.7784229831175707,
+      "best_params": {
+        "model__C": 10
+      }
+    },
+    {
+      "feature_set": "GLCM",
+      "model": "SVM (RBF)",
+      "accuracy": 0.8445475638051044,
+      "macro_f1": 0.7580529852969589,
+      "macro_precision": 0.7403133903133904,
+      "macro_recall": 0.8156451612903225,
+      "best_cv_macro_f1": 0.7714607340970485,
+      "best_params": {
+        "model__C": 5,
+        "model__gamma": "scale"
+      }
+    },
+    {
+      "feature_set": "GLCM",
+      "model": "Random Forest",
+      "accuracy": 0.8538283062645011,
+      "macro_f1": 0.7356646505582676,
+      "macro_precision": 0.7582462556141637,
+      "macro_recall": 0.7223655913978494,
+      "best_cv_macro_f1": 0.7246092438513303,
+      "best_params": {
+        "model__max_features": 0.7,
+        "model__min_samples_leaf": 2
+      }
+    },
+    {
+      "feature_set": "LBP",
+      "model": "Majority baseline",
+      "accuracy": 0.46403712296983757,
+      "macro_f1": 0.21130480718436342,
+      "macro_precision": 0.15467904098994587,
+      "macro_recall": 0.3333333333333333,
+      "best_cv_macro_f1": null,
+      "best_params": null
+    },
+    {
+      "feature_set": "LBP",
+      "model": "Logistic Regression",
+      "accuracy": 0.6473317865429234,
+      "macro_f1": 0.600730219231202,
+      "macro_precision": 0.5888559456040481,
+      "macro_recall": 0.7012365591397849,
+      "best_cv_macro_f1": 0.5975241093296564,
+      "best_params": {
+        "model__C": 1
+      }
+    },
+    {
+      "feature_set": "LBP",
+      "model": "SVM (RBF)",
+      "accuracy": 0.654292343387471,
+      "macro_f1": 0.6045179297827347,
+      "macro_precision": 0.5922386644815064,
+      "macro_recall": 0.6971505376344086,
+      "best_cv_macro_f1": 0.6246689786044006,
+      "best_params": {
+        "model__C": 5,
+        "model__gamma": "scale"
+      }
+    },
+    {
+      "feature_set": "LBP",
+      "model": "Random Forest",
+      "accuracy": 0.6983758700696056,
+      "macro_f1": 0.6619786535303777,
+      "macro_precision": 0.6814401294498382,
+      "macro_recall": 0.6470430107526881,
+      "best_cv_macro_f1": 0.6357604341451689,
+      "best_params": {
+        "model__max_features": "sqrt",
+        "model__min_samples_leaf": 2
+      }
+    },
+    {
+      "feature_set": "Colour + GLCM + LBP",
+      "model": "Majority baseline",
+      "accuracy": 0.46403712296983757,
+      "macro_f1": 0.21130480718436342,
+      "macro_precision": 0.15467904098994587,
+      "macro_recall": 0.3333333333333333,
+      "best_cv_macro_f1": null,
+      "best_params": null
+    },
+    {
+      "feature_set": "Colour + GLCM + LBP",
+      "model": "Logistic Regression",
+      "accuracy": 0.9837587006960556,
+      "macro_f1": 0.966009184814403,
+      "macro_precision": 0.9620655752123435,
+      "macro_recall": 0.9701612903225807,
+      "best_cv_macro_f1": 0.9678943472801667,
+      "best_params": {
+        "model__C": 10
+      }
+    },
+    {
+      "feature_set": "Colour + GLCM + LBP",
+      "model": "SVM (RBF)",
+      "accuracy": 0.9930394431554525,
+      "macro_f1": 0.9859181243538687,
+      "macro_precision": 0.9859305622425506,
+      "macro_recall": 0.9859139784946237,
+      "best_cv_macro_f1": 0.9798324954700603,
+      "best_params": {
+        "model__C": 1,
+        "model__gamma": "scale"
+      }
+    },
+    {
+      "feature_set": "Colour + GLCM + LBP",
+      "model": "Random Forest",
+      "accuracy": 0.9907192575406032,
+      "macro_f1": 0.9887125038761164,
+      "macro_precision": 0.9933744630744482,
+      "macro_recall": 0.984247311827957,
+      "best_cv_macro_f1": 0.9670854765003464,
+      "best_params": {
+        "model__max_features": 0.7,
+        "model__min_samples_leaf": 2
+      }
+    }
+  ],
+  "confusion_matrices": {
+    "Colour__Majority baseline": [
+      [
+        200,
+        0,
+        0
+      ],
+      [
+        31,
+        0,
+        0
+      ],
+      [
+        200,
+        0,
+        0
+      ]
+    ],
+    "Colour__Logistic Regression": [
+      [
+        198,
+        0,
+        2
+      ],
+      [
+        0,
+        30,
+        1
+      ],
+      [
+        4,
+        4,
+        192
+      ]
+    ],
+    "Colour__SVM (RBF)": [
+      [
+        197,
+        0,
+        3
+      ],
+      [
+        0,
+        28,
+        3
+      ],
+      [
+        1,
+        0,
+        199
+      ]
+    ],
+    "Colour__Random Forest": [
+      [
+        198,
+        0,
+        2
+      ],
+      [
+        0,
+        28,
+        3
+      ],
+      [
+        0,
+        0,
+        200
+      ]
+    ],
+    "GLCM__Majority baseline": [
+      [
+        200,
+        0,
+        0
+      ],
+      [
+        31,
+        0,
+        0
+      ],
+      [
+        200,
+        0,
+        0
+      ]
+    ],
+    "GLCM__Logistic Regression": [
+      [
+        185,
+        5,
+        10
+      ],
+      [
+        4,
+        26,
+        1
+      ],
+      [
+        3,
+        24,
+        173
+      ]
+    ],
+    "GLCM__SVM (RBF)": [
+      [
+        177,
+        10,
+        13
+      ],
+      [
+        3,
+        23,
+        5
+      ],
+      [
+        9,
+        27,
+        164
+      ]
+    ],
+    "GLCM__Random Forest": [
+      [
+        170,
+        7,
+        23
+      ],
+      [
+        5,
+        12,
+        14
+      ],
+      [
+        10,
+        4,
+        186
+      ]
+    ],
+    "LBP__Majority baseline": [
+      [
+        200,
+        0,
+        0
+      ],
+      [
+        31,
+        0,
+        0
+      ],
+      [
+        200,
+        0,
+        0
+      ]
+    ],
+    "LBP__Logistic Regression": [
+      [
+        138,
+        20,
+        42
+      ],
+      [
+        2,
+        26,
+        3
+      ],
+      [
+        46,
+        39,
+        115
+      ]
+    ],
+    "LBP__SVM (RBF)": [
+      [
+        137,
+        21,
+        42
+      ],
+      [
+        3,
+        25,
+        3
+      ],
+      [
+        44,
+        36,
+        120
+      ]
+    ],
+    "LBP__Random Forest": [
+      [
+        143,
+        4,
+        53
+      ],
+      [
+        4,
+        16,
+        11
+      ],
+      [
+        53,
+        5,
+        142
+      ]
+    ],
+    "Colour + GLCM + LBP__Majority baseline": [
+      [
+        200,
+        0,
+        0
+      ],
+      [
+        31,
+        0,
+        0
+      ],
+      [
+        200,
+        0,
+        0
+      ]
+    ],
+    "Colour + GLCM + LBP__Logistic Regression": [
+      [
+        200,
+        0,
+        0
+      ],
+      [
+        0,
+        29,
+        2
+      ],
+      [
+        2,
+        3,
+        195
+      ]
+    ],
+    "Colour + GLCM + LBP__SVM (RBF)": [
+      [
+        199,
+        0,
+        1
+      ],
+      [
+        0,
+        30,
+        1
+      ],
+      [
+        0,
+        1,
+        199
+      ]
+    ],
+    "Colour + GLCM + LBP__Random Forest": [
+      [
+        198,
+        0,
+        2
+      ],
+      [
+        0,
+        30,
+        1
+      ],
+      [
+        1,
+        0,
+        199
+      ]
+    ]
+  },
+  "notes": [
+    "All metrics are measured by this run; they are not pre-filled example values.",
+    "Exact duplicate image files were removed before splitting.",
+    "Feature extraction is deterministic; scaling and hyperparameter tuning are fitted within training folds.",
+    "PlantVillage images are collected under relatively controlled conditions; field generalisation is not established."
+  ]
+}
