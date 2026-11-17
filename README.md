@@ -109,7 +109,7 @@ Then open `http://localhost:8000/site/` in a browser. A local HTTP server is nee
 
 Adapt this disclosure to match actual use and course policy:
 
-"Generative AI was used to assist with project planning, code scaffolding, debugging suggestions and documentation. The student reviewed the code, ran the experiments, and is responsible for understanding and verifying the submitted work."
+Generative AI (ChatGPT) was used as an assisting tool during this project for brainstorming and refining the project approach, developing parts of the Python implementation, debugging code, and preparing the project website and documentation. I selected and worked with the dataset, executed the experiments, reviewed the resulting outputs, and is responsible for the analysis, interpretation, and conclusions presented in this project. AI-generated suggestions and code were reviewed and adapted as needed.
 
 ## References
 
